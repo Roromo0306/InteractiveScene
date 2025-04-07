@@ -4,22 +4,32 @@ using UnityEngine;
 
 public class ThirdPersonCam : MonoBehaviour
 {
-    public Rigidbody controller;
+    public Transform target; // Personaje a seguir
+    public Vector3 offset = new Vector3(0, 3, -5);
+    public float mouseSensitivity = 100f;
 
-    public float speed = 6f;
+    private float yaw = 0f;
+    private float pitch = 0f;
 
+    public float minPitch = -20f; // Límite de cámara hacia abajo
+    public float maxPitch = 60f;  // Límite de cámara hacia arriba
 
     private void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked; // Oculta el cursor
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal*speed, 0f, vertical*speed);
+        // Obtener movimiento del mouse
+        yaw += Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
-        controller.velocity = direction;
+        // Rotar la cámara
+        transform.position = target.position + Quaternion.Euler(pitch, yaw, 0) * offset;
+        transform.LookAt(target.position);
     }
 }
+
+
