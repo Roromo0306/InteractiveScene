@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThirdPersonCam : MonoBehaviour
 {
-    public CharacterController controller;
+    public Rigidbody controller;
 
     public float speed = 6f;
 
@@ -18,11 +18,8 @@ public class ThirdPersonCam : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        Vector3 direction = new Vector3(horizontal*speed, 0f, vertical*speed);
 
-        if(direction.magnitude >= 0.1f)
-        {
-            controller.Move(direction * speed * Time.deltaTime);
-        }
+        controller.velocity = direction;
     }
 }
