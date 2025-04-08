@@ -8,15 +8,15 @@ public class ThirdPersonCam : MonoBehaviour
     public Vector3 offset = new Vector3(0, 3, -5);
     public float mouseSensitivity = 100f;
 
-    private float yaw = 0f;
-    private float pitch = 0f;
+    private float yaw = 0f; //Controla el movimiento horizontal
+    private float pitch = 0f;//Controla el movimiento vertical
 
     public float minPitch = -20f; // Límite de cámara hacia abajo
     public float maxPitch = 60f;  // Límite de cámara hacia arriba
 
     private void Start()
     {
-        // Oculta el cursor
+        
     }
 
     private void LateUpdate()
